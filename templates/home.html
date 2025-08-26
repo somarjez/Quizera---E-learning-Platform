@@ -1,0 +1,425 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+
+{% block title %}Interactive Learning Platform{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="relative overflow-hidden bg-gradient-to-br from-primary-50 via-white to-accent-50 py-20">
+    <div class="absolute inset-0 bg-grid-pattern opacity-5"></div>
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center">
+            <h1 class="text-5xl md:text-7xl font-extrabold text-gray-900 mb-6 animate-fade-in">
+                Welcome to <span class="gradient-text">Quizera</span>
+            </h1>
+            <p class="text-xl md:text-2xl text-gray-600 mb-8 max-w-3xl mx-auto animate-slide-up">
+                Master Computer Science through interactive lessons, gamified quizzes, and earn certificates that validate your knowledge
+            </p>
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12 animate-slide-up">
+                {% if not request.user.is_authenticated %}
+                    <a href="{% url 'signup' %}" class="px-8 py-4 bg-gradient-to-r from-primary-500 to-accent-500 text-white font-semibold rounded-xl hover:from-primary-600 hover:to-accent-600 transform hover:scale-105 transition-all duration-300 shadow-xl">
+                        <i class="fas fa-rocket mr-2"></i>Start Learning Today
+                    </a>
+                    <a href="{% url 'courses:course_list' %}" class="px-8 py-4 bg-white text-primary-600 font-semibold rounded-xl border-2 border-primary-200 hover:border-primary-300 hover:bg-primary-50 transition-all duration-300">
+                        <i class="fas fa-eye mr-2"></i>Browse Courses
+                    </a>
+                {% else %}
+                    <a href="{% url 'courses:course_list' %}" class="px-8 py-4 bg-gradient-to-r from-primary-500 to-accent-500 text-white font-semibold rounded-xl hover:from-primary-600 hover:to-accent-600 transform hover:scale-105 transition-all duration-300 shadow-xl">
+                        <i class="fas fa-book-open mr-2"></i>Continue Learning
+                    </a>
+                    {% if request.user.is_student %}
+                        <a href="{% url 'students:student_course_list' %}" class="px-8 py-4 bg-white text-primary-600 font-semibold rounded-xl border-2 border-primary-200 hover:border-primary-300 hover:bg-primary-50 transition-all duration-300">
+                            <i class="fas fa-user-graduate mr-2"></i>My Dashboard
+                        </a>
+                    {% endif %}
+                {% endif %}
+            </div>
+
+            <!-- Stats -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-4xl mx-auto">
+                <div class="text-center animate-float">
+                    <div class="text-3xl md:text-4xl font-bold text-primary-600 mb-2">1000+</div>
+                    <div class="text-gray-600">Students</div>
+                </div>
+                <div class="text-center animate-float" style="animation-delay: 0.2s;">
+                    <div class="text-3xl md:text-4xl font-bold text-accent-500 mb-2">50+</div>
+                    <div class="text-gray-600">Courses</div>
+                </div>
+                <div class="text-center animate-float" style="animation-delay: 0.4s;">
+                    <div class="text-3xl md:text-4xl font-bold text-purple-600 mb-2">500+</div>
+                    <div class="text-gray-600">Quizzes</div>
+                </div>
+                <div class="text-center animate-float" style="animation-delay: 0.6s;">
+                    <div class="text-3xl md:text-4xl font-bold text-orange-500 mb-2">95%</div>
+                    <div class="text-gray-600">Success Rate</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Features Section -->
+<section class="py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+            <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+                Why Choose <span class="gradient-text">Quizera</span>?
+            </h2>
+            <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                Our platform combines cutting-edge technology with proven educational methods to deliver an unparalleled learning experience
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <!-- Interactive Quizzes -->
+            <div class="group bg-gradient-to-br from-blue-50 to-blue-100 p-8 rounded-2xl hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
+                <div class="w-16 h-16 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                    <i class="fas fa-brain text-white text-2xl"></i>
+                </div>
+                <h3 class="text-2xl font-bold text-gray-900 mb-4">Interactive Quizzes</h3>
+                <p class="text-gray-600 mb-6">
+                    Game-like quizzes with time limits, instant feedback, and engaging scoring systems that make learning fun and competitive.
+                </p>
+                <ul class="space-y-2 text-sm text-gray-600">
+                    <li class="flex items-center"><i class="fas fa-check text-blue-500 mr-2"></i>Real-time feedback</li>
+                    <li class="flex items-center"><i class="fas fa-check text-blue-500 mr-2"></i>Timed challenges</li>
+                    <li class="flex items-center"><i class="fas fa-check text-blue-500 mr-2"></i>Progress tracking</li>
+                </ul>
+            </div>
+
+            <!-- Comprehensive Courses -->
+            <div class="group bg-gradient-to-br from-green-50 to-green-100 p-8 rounded-2xl hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
+                <div class="w-16 h-16 bg-gradient-to-br from-green-500 to-green-600 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                    <i class="fas fa-graduation-cap text-white text-2xl"></i>
+                </div>
+                <h3 class="text-2xl font-bold text-gray-900 mb-4">Structured Learning</h3>
+                <p class="text-gray-600 mb-6">
+                    Well-organized courses with progressive difficulty levels, ensuring you build solid foundations before advancing.
+                </p>
+                <ul class="space-y-2 text-sm text-gray-600">
+                    <li class="flex items-center"><i class="fas fa-check text-green-500 mr-2"></i>Step-by-step lessons</li>
+                    <li class="flex items-center"><i class="fas fa-check text-green-500 mr-2"></i>Video tutorials</li>
+                    <li class="flex items-center"><i class="fas fa-check text-green-500 mr-2"></i>Practical exercises</li>
+                </ul>
+            </div>
+
+            <!-- Certificates -->
+            <div class="group bg-gradient-to-br from-purple-50 to-purple-100 p-8 rounded-2xl hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
+                <div class="w-16 h-16 bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                    <i class="fas fa-certificate text-white text-2xl"></i>
+                </div>
+                <h3 class="text-2xl font-bold text-gray-900 mb-4">Digital Certificates</h3>
+                <p class="text-gray-600 mb-6">
+                    Earn verified digital certificates upon course completion to showcase your achievements and boost your career.
+                </p>
+                <ul class="space-y-2 text-sm text-gray-600">
+                    <li class="flex items-center"><i class="fas fa-check text-purple-500 mr-2"></i>PDF certificates</li>
+                    <li class="flex items-center"><i class="fas fa-check text-purple-500 mr-2"></i>Blockchain verified</li>
+                    <li class="flex items-center"><i class="fas fa-check text-purple-500 mr-2"></i>Industry recognized</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Learning Path Section -->
+<section class="py-20 bg-gradient-to-br from-gray-50 to-blue-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+            <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+                Your Learning Journey
+            </h2>
+            <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                Follow our structured path from beginner to expert in computer science
+            </p>
+        </div>
+
+        <div class="relative">
+            <!-- Timeline line -->
+            <div class="hidden md:block absolute left-1/2 transform -translate-x-1/2 w-1 h-full bg-gradient-to-b from-primary-500 to-accent-500 rounded-full"></div>
+
+            <div class="space-y-12">
+                <!-- Step 1 -->
+                <div class="flex flex-col md:flex-row items-center">
+                    <div class="md:w-1/2 md:pr-12 mb-8 md:mb-0">
+                        <div class="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-300">
+                            <div class="flex items-center mb-4">
+                                <div class="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center text-white font-bold text-lg mr-4">1</div>
+                                <h3 class="text-2xl font-bold text-gray-900">Enroll in Courses</h3>
+                            </div>
+                            <p class="text-gray-600">
+                                Choose from our extensive catalog of computer science courses, from programming fundamentals to advanced algorithms and data structures.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="hidden md:block w-8 h-8 bg-gradient-to-br from-primary-500 to-accent-500 rounded-full border-4 border-white shadow-lg relative z-10"></div>
+                    <div class="md:w-1/2 md:pl-12"></div>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="flex flex-col md:flex-row-reverse items-center">
+                    <div class="md:w-1/2 md:pl-12 mb-8 md:mb-0">
+                        <div class="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-300">
+                            <div class="flex items-center mb-4">
+                                <div class="w-12 h-12 bg-gradient-to-br from-green-500 to-green-600 rounded-full flex items-center justify-center text-white font-bold text-lg mr-4">2</div>
+                                <h3 class="text-2xl font-bold text-gray-900">Interactive Learning</h3>
+                            </div>
+                            <p class="text-gray-600">
+                                Engage with interactive lessons, watch video tutorials, and practice with hands-on exercises designed to reinforce your understanding.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="hidden md:block w-8 h-8 bg-gradient-to-br from-primary-500 to-accent-500 rounded-full border-4 border-white shadow-lg relative z-10"></div>
+                    <div class="md:w-1/2 md:pr-12"></div>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="flex flex-col md:flex-row items-center">
+                    <div class="md:w-1/2 md:pr-12 mb-8 md:mb-0">
+                        <div class="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-300">
+                            <div class="flex items-center mb-4">
+                                <div class="w-12 h-12 bg-gradient-to-br from-purple-500 to-purple-600 rounded-full flex items-center justify-center text-white font-bold text-lg mr-4">3</div>
+                                <h3 class="text-2xl font-bold text-gray-900">Take Quizzes & Exams</h3>
+                            </div>
+                            <p class="text-gray-600">
+                                Test your knowledge with gamified quizzes and comprehensive exams that adapt to your learning pace and provide instant feedback.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="hidden md:block w-8 h-8 bg-gradient-to-br from-primary-500 to-accent-500 rounded-full border-4 border-white shadow-lg relative z-10"></div>
+                    <div class="md:w-1/2 md:pl-12"></div>
+                </div>
+
+                <!-- Step 4 -->
+                <div class="flex flex-col md:flex-row-reverse items-center">
+                    <div class="md:w-1/2 md:pl-12 mb-8 md:mb-0">
+                        <div class="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-300">
+                            <div class="flex items-center mb-4">
+                                <div class="w-12 h-12 bg-gradient-to-br from-orange-500 to-orange-600 rounded-full flex items-center justify-center text-white font-bold text-lg mr-4">4</div>
+                                <h3 class="text-2xl font-bold text-gray-900">Earn Certificates</h3>
+                            </div>
+                            <p class="text-gray-600">
+                                Successfully complete courses and receive digital certificates that validate your skills and can be shared with employers or on professional networks.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="hidden md:block w-8 h-8 bg-gradient-to-br from-primary-500 to-accent-500 rounded-full border-4 border-white shadow-lg relative z-10"></div>
+                    <div class="md:w-1/2 md:pr-12"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Popular Courses Preview -->
+<section class="py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+            <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+                Popular Courses
+            </h2>
+            <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                Start with these highly-rated courses that thousands of students have successfully completed
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Course Card 1 -->
+            <div class="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 overflow-hidden border border-gray-100">
+                <div class="h-48 bg-gradient-to-br from-blue-500 to-purple-600 relative">
+                    <div class="absolute inset-0 bg-black bg-opacity-20"></div>
+                    <div class="absolute top-4 left-4">
+                        <span class="bg-white bg-opacity-20 backdrop-blur-sm text-white px-3 py-1 rounded-full text-sm font-medium">Beginner</span>
+                    </div>
+                    <div class="absolute bottom-4 left-4 right-4">
+                        <h3 class="text-white text-xl font-bold mb-2">Python Programming Fundamentals</h3>
+                        <p class="text-white text-opacity-90 text-sm">Learn the basics of Python programming</p>
+                    </div>
+                </div>
+                <div class="p-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="flex items-center text-sm text-gray-600">
+                            <i class="fas fa-clock mr-1"></i>
+                            <span>8 weeks</span>
+                        </div>
+                        <div class="flex items-center text-sm text-gray-600">
+                            <i class="fas fa-users mr-1"></i>
+                            <span>1.2k students</span>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center">
+                            <div class="flex text-yellow-400">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <span class="text-gray-600 text-sm ml-2">4.9</span>
+                        </div>
+                        <button class="px-4 py-2 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-lg hover:from-blue-600 hover:to-purple-700 transition-colors duration-200 text-sm font-medium">
+                            Enroll Now
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Course Card 2 -->
+            <div class="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 overflow-hidden border border-gray-100">
+                <div class="h-48 bg-gradient-to-br from-green-500 to-blue-600 relative">
+                    <div class="absolute inset-0 bg-black bg-opacity-20"></div>
+                    <div class="absolute top-4 left-4">
+                        <span class="bg-white bg-opacity-20 backdrop-blur-sm text-white px-3 py-1 rounded-full text-sm font-medium">Intermediate</span>
+                    </div>
+                    <div class="absolute bottom-4 left-4 right-4">
+                        <h3 class="text-white text-xl font-bold mb-2">Data Structures & Algorithms</h3>
+                        <p class="text-white text-opacity-90 text-sm">Master essential CS concepts</p>
+                    </div>
+                </div>
+                <div class="p-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="flex items-center text-sm text-gray-600">
+                            <i class="fas fa-clock mr-1"></i>
+                            <span>12 weeks</span>
+                        </div>
+                        <div class="flex items-center text-sm text-gray-600">
+                            <i class="fas fa-users mr-1"></i>
+                            <span>850 students</span>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center">
+                            <div class="flex text-yellow-400">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <span class="text-gray-600 text-sm ml-2">4.8</span>
+                        </div>
+                        <button class="px-4 py-2 bg-gradient-to-r from-green-500 to-blue-600 text-white rounded-lg hover:from-green-600 hover:to-blue-700 transition-colors duration-200 text-sm font-medium">
+                            Enroll Now
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Course Card 3 -->
+            <div class="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 overflow-hidden border border-gray-100">
+                <div class="h-48 bg-gradient-to-br from-purple-500 to-pink-600 relative">
+                    <div class="absolute inset-0 bg-black bg-opacity-20"></div>
+                    <div class="absolute top-4 left-4">
+                        <span class="bg-white bg-opacity-20 backdrop-blur-sm text-white px-3 py-1 rounded-full text-sm font-medium">Advanced</span>
+                    </div>
+                    <div class="absolute bottom-4 left-4 right-4">
+                        <h3 class="text-white text-xl font-bold mb-2">Machine Learning Basics</h3>
+                        <p class="text-white text-opacity-90 text-sm">Introduction to ML concepts</p>
+                    </div>
+                </div>
+                <div class="p-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="flex items-center text-sm text-gray-600">
+                            <i class="fas fa-clock mr-1"></i>
+                            <span>16 weeks</span>
+                        </div>
+                        <div class="flex items-center text-sm text-gray-600">
+                            <i class="fas fa-users mr-1"></i>
+                            <span>620 students</span>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center">
+                            <div class="flex text-yellow-400">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <span class="text-gray-600 text-sm ml-2">4.9</span>
+                        </div>
+                        <button class="px-4 py-2 bg-gradient-to-r from-purple-500 to-pink-600 text-white rounded-lg hover:from-purple-600 hover:to-pink-700 transition-colors duration-200 text-sm font-medium">
+                            Enroll Now
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-center mt-12">
+            <a href="{% url 'courses:course_list' %}" class="px-8 py-4 bg-gradient-to-r from-primary-500 to-accent-500 text-white font-semibold rounded-xl hover:from-primary-600 hover:to-accent-600 transform hover:scale-105 transition-all duration-300 shadow-xl">
+                <i class="fas fa-arrow-right mr-2"></i>View All Courses
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="py-20 bg-gradient-to-br from-primary-600 to-accent-600 relative overflow-hidden">
+    <div class="absolute inset-0 bg-black bg-opacity-10"></div>
+    <div class="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <h2 class="text-4xl md:text-5xl font-bold text-white mb-6">
+            Ready to Transform Your Career?
+        </h2>
+        <p class="text-xl text-white text-opacity-90 mb-8 max-w-2xl mx-auto">
+            Join thousands of students who have already accelerated their learning journey with Quizera's interactive platform
+        </p>
+        
+        {% if not request.user.is_authenticated %}
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+                <a href="{% url 'signup' %}" class="px-8 py-4 bg-white text-primary-600 font-bold rounded-xl hover:bg-gray-100 transform hover:scale-105 transition-all duration-300 shadow-xl">
+                    <i class="fas fa-user-plus mr-2"></i>Get Started Free
+                </a>
+                <a href="{% url 'students:contact_us' %}" class="px-8 py-4 border-2 border-white text-white font-semibold rounded-xl hover:bg-white hover:text-primary-600 transition-all duration-300">
+                    <i class="fas fa-envelope mr-2"></i>Contact Us
+                </a>
+            </div>
+        {% else %}
+            <a href="{% url 'courses:course_list' %}" class="inline-block px-8 py-4 bg-white text-primary-600 font-bold rounded-xl hover:bg-gray-100 transform hover:scale-105 transition-all duration-300 shadow-xl">
+                <i class="fas fa-book-open mr-2"></i>Continue Your Journey
+            </a>
+        {% endif %}
+    </div>
+</section>
+
+{% block extra_scripts %}
+<script>
+    // Add smooth scroll behavior
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            document.querySelector(this.getAttribute('href')).scrollIntoView({
+                behavior: 'smooth'
+            });
+        });
+    });
+
+    // Add intersection observer for animations
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+            }
+        });
+    }, observerOptions);
+
+    // Observe all animated elements
+    document.querySelectorAll('.animate-slide-up, .animate-fade-in').forEach(el => {
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(30px)';
+        el.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
+        observer.observe(el);
+    });
+</script>
+{% endblock %}
+
+{% endblock %}
