@@ -1,27 +1,235 @@
 {% extends "base.html" %}
-   {% block title %}
-     {% if object %}
-       Edit content "{{ object.title }}"
-     {% else %}
-       Add a new content
-     {% endif %}
-   {% endblock %}
-   {% block content %}
-   <div class="container-fluid">
-         <h1>
-           {% if object %}
-             Edit content "{{ object.title }}"
-           {% else %}
-             Add a new content
-           {% endif %}
-         </h1>
-         <div>
-           <h2>Course info</h2>
-           <form action="" method="post" enctype="multipart/form-data">
-             {{ form.as_p }}
-             {% csrf_token %}
-             <p><input type="submit" class="bg-teal-600 hover:bg-teal-700 text-white text-sm px-4 py-2  border rounded-full" value="Save content"></p>
-           </form>
-         </div>
-     </div>
-   {% endblock %}
+{% block title %}
+  {% if object %}
+    Edit content "{{ object.title }}"
+  {% else %}
+    Add a new content
+  {% endif %}
+{% endblock %}
+
+{% block content %}
+<div class="container mx-auto max-w-2xl p-6">
+  <!-- Header -->
+  <div class="mb-8">
+    <div class="flex items-center mb-4">
+      <a href="javascript:history.back()" 
+         class="inline-flex items-center text-gray-400 hover:text-blue-400 transition-colors duration-200 mr-4">
+        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+        </svg>
+        Back
+      </a>
+    </div>
+    
+    <div class="flex items-center">
+      <div class="w-12 h-12 bg-gradient-to-r from-green-600 to-blue-600 rounded-xl flex items-center justify-center mr-4">
+        {% if object %}
+          <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+          </svg>
+        {% else %}
+          <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+          </svg>
+        {% endif %}
+      </div>
+      <div>
+        <h1 class="text-3xl font-bold text-white">
+          {% if object %}
+            Edit Content
+          {% else %}
+            Add New Content
+          {% endif %}
+        </h1>
+        {% if object %}
+          <p class="text-gray-400 mt-1">"{{ object.title }}"</p>
+        {% else %}
+          <p class="text-gray-400 mt-1">Create engaging content for your course</p>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+
+  <!-- Form Card -->
+  <div class="bg-slate-800/50 backdrop-blur-sm border border-slate-700/50 rounded-2xl p-8">
+    <div class="mb-6">
+      <h2 class="text-xl font-semibold text-white mb-2">Content Information</h2>
+      <p class="text-gray-400 text-sm">Add content details, files, and media for your course module</p>
+    </div>
+    
+    <form action="" method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+      <div class="space-y-6">
+        {{ form.as_p }}
+      </div>
+      
+      <div class="flex items-center justify-between pt-6 mt-8 border-t border-slate-700/50">
+        <button type="button" 
+                onclick="history.back()"
+                class="inline-flex items-center px-4 py-2 text-gray-400 hover:text-gray-300 font-medium transition-colors duration-200">
+          <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+          </svg>
+          Cancel
+        </button>
+        
+        <button type="submit" 
+                class="inline-flex items-center px-8 py-3 bg-gradient-to-r from-green-600 to-blue-600 hover:from-green-700 hover:to-blue-700 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200 cursor-pointer">
+          {% if object %}
+            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+            </svg>
+            Update Content
+          {% else %}
+            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+            </svg>
+            Save Content
+          {% endif %}
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<style>
+/* Style the form fields that Django generates */
+form p {
+  margin-bottom: 1.5rem;
+}
+
+form p label {
+  display: block;
+  font-weight: 500;
+  color: #e2e8f0;
+  margin-bottom: 0.5rem;
+  font-size: 0.875rem;
+}
+
+form p input,
+form p textarea,
+form p select {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  background: rgba(51, 65, 85, 0.5) !important;
+  border: 1px solid rgba(71, 85, 105, 0.5) !important;
+  border-radius: 0.75rem;
+  color: white !important;
+  transition: all 0.2s ease;
+  font-size: 0.875rem;
+}
+
+/* File input styling */
+form p input[type="file"] {
+  background: rgba(51, 65, 85, 0.3) !important;
+  border: 2px dashed rgba(71, 85, 105, 0.5) !important;
+  padding: 1rem;
+  text-align: center;
+  cursor: pointer;
+}
+
+form p input[type="file"]:hover {
+  border-color: #3b82f6 !important;
+  background: rgba(59, 130, 246, 0.1) !important;
+}
+
+/* Checkbox and radio styling */
+form p input[type="checkbox"],
+form p input[type="radio"] {
+  width: auto !important;
+  margin-right: 0.5rem;
+  accent-color: #3b82f6;
+}
+
+form p input::placeholder,
+form p textarea::placeholder {
+  color: #9ca3af !important;
+  opacity: 0.7;
+}
+
+form p input:focus,
+form p textarea:focus,
+form p select:focus {
+  outline: none !important;
+  border-color: #3b82f6 !important;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+form p textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+/* Select dropdown styling */
+form p select {
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%239ca3af' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+  background-position: right 0.5rem center;
+  background-repeat: no-repeat;
+  background-size: 1.5em 1.5em;
+  padding-right: 2.5rem;
+}
+
+/* Error styling */
+.errorlist {
+  margin-top: 0.5rem;
+  color: #ef4444;
+  font-size: 0.875rem;
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+}
+
+.errorlist li {
+  list-style: none;
+  display: flex;
+  align-items: center;
+}
+
+.errorlist li:before {
+  content: "⚠";
+  margin-right: 0.5rem;
+}
+
+/* Help text styling */
+form p .helptext {
+  display: block;
+  margin-top: 0.5rem;
+  font-size: 0.875rem;
+  color: #9ca3af;
+  font-style: italic;
+}
+
+/* Required field indicator */
+form p label:has(+ input[required]):after,
+form p label:has(+ textarea[required]):after,
+form p label:has(+ select[required]):after {
+  content: " *";
+  color: #ef4444;
+  font-weight: bold;
+}
+
+/* Animation for form elements */
+form p {
+  animation: fadeInUp 0.4s ease-out;
+}
+
+form p:nth-child(2) { animation-delay: 0.1s; }
+form p:nth-child(3) { animation-delay: 0.2s; }
+form p:nth-child(4) { animation-delay: 0.3s; }
+form p:nth-child(5) { animation-delay: 0.4s; }
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+</style>
+{% endblock %}

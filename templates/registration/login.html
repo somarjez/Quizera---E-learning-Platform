@@ -1,58 +1,214 @@
-{% extends "base2.html" %}
+{% extends "base3.html" %}
 {% load i18n %}
 {% load widget_tweaks %}
 {% load static %}
 {% block title %}{% trans 'Log In' %}{% endblock %}
 {% block content %}
-<div class="h-screen w-screen">
-    <div class="flex flex-col items-center flex-1 h-full justify-center px-4 sm:px-0">
-        <div class="flex rounded-lg shadow-lg w-full sm:w-3/4 lg:w-1/2 bg-white sm:mx-0" style="height: 500px">
-            <div class="flex flex-col w-full md:w-1/2 p-4">
-                <div class="flex flex-col flex-1 justify-center mb-8">
-                    <h1 class="text-4xl text-center font-thin">{% trans 'Welcome Back' %}</h1>
-                    <div class="w-full mt-4">
-                        <form class="form-horizontal w-3/4 mx-auto" method="POST" novalidate>
+<div class="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900/20 to-slate-900">
+    <!-- Animated Background Elements -->
+    <div class="fixed inset-0 overflow-hidden pointer-events-none">
+        <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl animate-pulse"></div>
+        <div class="absolute bottom-1/4 right-1/4 w-80 h-80 bg-purple-500/10 rounded-full blur-3xl animate-pulse" style="animation-delay: 2s;"></div>
+        <div class="absolute top-3/4 left-1/2 w-64 h-64 bg-indigo-500/10 rounded-full blur-3xl animate-pulse" style="animation-delay: 4s;"></div>
+    </div>
+    <div class="relative min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8">
+        <div class="max-w-md w-full space-y-8 relative z-10">
+            <!-- Header -->
+            <div class="text-center">
+                <h1 class="text-5xl font-black mb-4">
+                    <span class="text-white animate-gradient">
+                        {% trans 'Welcome' %}
+                    </span>
+                    <br>
+                    <span class="text-white font-light text-4xl">{% trans 'Back' %}</span>
+                </h1>
+                <p class="text-xl text-slate-300 mb-8">
+                    {% trans 'Sign in to your account and continue learning' %}
+                </p>
+            </div>
+            <!-- Login Form Card -->
+            <div class="relative group">
+                <div class="absolute inset-0 bg-gradient-to-r from-blue-500 to-purple-500 rounded-3xl blur-xl opacity-20 group-hover:opacity-30 transition-opacity duration-300"></div>
+                <div class="relative bg-slate-800/30 backdrop-blur-xl rounded-3xl border border-slate-700/30 shadow-2xl p-8">
+                    <form method="POST" novalidate class="login-form space-y-6">
                         {% if form.errors %}
-                            <p>{% trans 'Your username and password didn\'t match. Please try again.' %}</p>
+                        <div class="bg-red-500/20 backdrop-blur-sm border border-red-500/30 rounded-2xl p-4 mb-6">
+                            <div class="flex items-center space-x-3">
+                                <svg class="w-5 h-5 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.732-.833-2.5 0L4.232 15.5c-.77.833.192 2.5 1.732 2.5z"/>
+                                </svg>
+                                <p class="text-red-300 font-medium">{% trans "Your username and password didn't match. Please try again." %}</p>
+                            </div>
+                        </div>
                         {% endif %}
-
                         <input type="hidden" name="next" value="{{ next }}">
-
                         {% csrf_token %}
-
-                         {% for field in form %}
-                         <div class="flex flex-col mt-4">
-
-                            {% render_field field class="flex-grow h-8 px-2 rounded border border-gray-400" placeholder=field.label %}
-
+                        {% for field in form %}
+                        <div class="space-y-2">
+                            <label class="text-sm font-semibold text-slate-300 uppercase tracking-wide">
+                                {{ field.label }}
+                            </label>
+                            <div class="relative">
+                                {% render_field field class="w-full h-14 px-6 bg-white/5 backdrop-blur-sm border border-white/20 rounded-2xl text-slate-200 focus:outline-none focus:ring-4 focus:ring-blue-500/30 focus:border-blue-500/50 transition-all duration-300" placeholder=field.label %}
+                            </div>
                             {% if field.help_text %}
-                              <small class="form-text text-muted">
-                                {{ field.help_text }}
-                              </small>
+                            <p class="text-xs text-slate-400 mt-2">{{ field.help_text }}</p>
                             {% endif %}
-                          </div>
+                        </div>
                         {% endfor %}
-
-                        <div class="flex flex-col mt-8">
-                            <button type="submit" class="bg-teal-500 hover:bg-teal-700 text-white text-sm font-semibold py-2 px-4 rounded">
-                                {% trans 'Login' %}
+                        <!-- Login Button -->
+                        <div class="pt-4">
+                            <button type="submit" 
+                                    class="group/btn w-full bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white font-semibold py-4 px-6 rounded-2xl transition-all duration-300 flex items-center justify-center space-x-2 shadow-lg hover:shadow-2xl hover:shadow-blue-500/25 transform hover:-translate-y-1">
+                                <span>{% trans 'Sign In' %}</span>
+                                <svg class="w-5 h-5 transform group-hover/btn:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
+                                </svg>
                             </button>
                         </div>
-
-                        </form>
-                        <div class="text-center mt-4">
-                            <a class="no-underline hover:underline text-blue-700 text-xs" href="{% url 'password_reset' %}">
+                    </form>
+                    <!-- Additional Links -->
+                    <div class="mt-8 pt-6 border-t border-white/10 space-y-4 text-center">
+                        <div>
+                            <a href="{% url 'password_reset' %}" 
+                               class="text-blue-400 hover:text-blue-300 font-medium transition-colors duration-300 hover:underline">
                                 {% trans 'Forgot Your Password?' %}
                             </a>
                         </div>
-                        <div class="text-center mt-4">
-                          <p class="text-xs">{% trans 'Don\'t have an account yet?' %} <a class="no-underline hover:underline text-blue-700 text-xs" href="{% url 'signup' %}">{% trans 'Create it !' %}</a></p>
+                        <div class="text-slate-400">
+                            {% trans "Don't have an account yet?" %}
+                            <a href="{% url 'signup' %}" 
+                               class="text-blue-400 hover:text-blue-300 font-medium transition-colors duration-300 hover:underline ml-1">
+                                {% trans 'Create it!' %}
+                            </a>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="hidden md:block md:w-1/2 rounded-r-lg" style="background: url('{% static 'images/login-page.jpeg' %}'); background-size: cover; background-position: center center;"></div>
+            <!-- Social Login (Optional) -->
+            <div class="text-center">
+                <div class="relative">
+                    <div class="absolute inset-0 flex items-center">
+                        <div class="w-full border-t border-white/20"></div>
+                    </div>
+                    <div class="relative flex justify-center text-sm">
+                        <span class="px-4 bg-gradient-to-br from-slate-900 via-purple-900/20 to-slate-900 text-slate-400">
+                            {% trans 'Quick & Secure Access' %}
+                        </span>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
+<style>
+    @keyframes gradient {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+    }
+    
+    .animate-gradient {
+        background-size: 200% 200%;
+        animation: gradient 3s ease infinite;
+    }
+    
+    /* OVERRIDE ALL BASE TEMPLATE STYLES - Maximum specificity */
+    .login-form input[type="text"],
+    .login-form input[type="password"], 
+    .login-form input[type="email"],
+    .login-form input.form-control,
+    form input[type="text"],
+    form input[type="password"],
+    form input[type="email"] {
+        transition: all 0.3s ease !important;
+        color: rgb(226 232 240) !important; /* slate-200 */
+    }
+    
+    .login-form input[type="text"]:focus,
+    .login-form input[type="password"]:focus,
+    .login-form input[type="email"]:focus,
+    .login-form input.form-control:focus,
+    form input[type="text"]:focus,
+    form input[type="password"]:focus,
+    form input[type="email"]:focus {
+        background-color: rgba(255, 255, 255, 0.08) !important;
+        transform: translateY(-2px) !important;
+        box-shadow: 0 8px 25px rgba(59, 130, 246, 0.15) !important;
+        color: rgb(226 232 240) !important;
+    }
+    
+    /* AGGRESSIVE PLACEHOLDER OVERRIDES - Target all possible selectors */
+    .login-form input::placeholder,
+    .login-form input::-webkit-input-placeholder,
+    .login-form input::-moz-placeholder,
+    .login-form input:-ms-input-placeholder,
+    .login-form input.form-control::placeholder,
+    .login-form input.form-control::-webkit-input-placeholder,
+    form input::placeholder,
+    form input::-webkit-input-placeholder,
+    form input::-moz-placeholder,
+    form input:-ms-input-placeholder,
+    input[type="text"]::placeholder, 
+    input[type="password"]::placeholder, 
+    input[type="email"]::placeholder,
+    input[type="text"]::-webkit-input-placeholder,
+    input[type="password"]::-webkit-input-placeholder,
+    input[type="email"]::-webkit-input-placeholder,
+    input[type="text"]::-moz-placeholder,
+    input[type="password"]::-moz-placeholder,
+    input[type="email"]::-moz-placeholder,
+    input[type="text"]:-ms-input-placeholder,
+    input[type="password"]:-ms-input-placeholder,
+    input[type="email"]:-ms-input-placeholder {
+        color: rgb(148 163 184 / 0.7) !important; /* slate-400 with opacity */
+        opacity: 1 !important;
+        transition: color 0.3s ease !important;
+    }
+    
+    /* Focus state placeholders */
+    .login-form input:focus::placeholder,
+    .login-form input:focus::-webkit-input-placeholder,
+    .login-form input.form-control:focus::placeholder,
+    form input:focus::placeholder,
+    form input:focus::-webkit-input-placeholder,
+    input[type="text"]:focus::placeholder, 
+    input[type="password"]:focus::placeholder, 
+    input[type="email"]:focus::placeholder,
+    input[type="text"]:focus::-webkit-input-placeholder,
+    input[type="password"]:focus::-webkit-input-placeholder,
+    input[type="email"]:focus::-webkit-input-placeholder {
+        color: rgb(148 163 184 / 0.5) !important;
+    }
+    
+    /* Blur state placeholders */
+    .login-form input:not(:focus)::placeholder,
+    .login-form input:not(:focus)::-webkit-input-placeholder,
+    form input:not(:focus)::placeholder,
+    form input:not(:focus)::-webkit-input-placeholder,
+    input[type="text"]:not(:focus)::placeholder,
+    input[type="password"]:not(:focus)::placeholder,
+    input[type="email"]:not(:focus)::placeholder,
+    input[type="text"]:not(:focus)::-webkit-input-placeholder,
+    input[type="password"]:not(:focus)::-webkit-input-placeholder,
+    input[type="email"]:not(:focus)::-webkit-input-placeholder {
+        color: rgb(148 163 184 / 0.7) !important;
+    }
+    
+    /* Override Bootstrap and any other framework styles */
+    .form-control::placeholder,
+    .form-control::-webkit-input-placeholder,
+    .form-control::-moz-placeholder,
+    .form-control:-ms-input-placeholder {
+        color: rgb(148 163 184 / 0.7) !important;
+        opacity: 1 !important;
+    }
+    
+    /* Floating animation for background elements */
+    @keyframes float {
+        0%, 100% { transform: translateY(0px) rotate(0deg); }
+        33% { transform: translateY(-30px) rotate(120deg); }
+        66% { transform: translateY(-60px) rotate(240deg); }
+    }
+</style>
 {% endblock %}
