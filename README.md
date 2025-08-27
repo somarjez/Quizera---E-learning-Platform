@@ -5,7 +5,7 @@
 ![License](https://img.shields.io/badge/License-MIT-yellow.svg)
 ![Status](https://img.shields.io/badge/Status-In%20Development-orange.svg)
 
-## 📚 Overview
+## 📚 Overviews
 
 QUIZERA is a comprehensive Python-based e-learning platform designed specifically for computer science students. The platform combines structured learning with gamified quizzes, formal assessments, and digital certification to create an engaging educational experience.
 
